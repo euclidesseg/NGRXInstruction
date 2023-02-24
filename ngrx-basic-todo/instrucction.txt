@@ -1,0 +1,40 @@
+    NGRX - STORE
+    ---- El estado de una aplicacion es simplemente el valor que tienen sus variables 
+    ---- en un determinado momento
+    ---- en la aplicacion de un contador el estado seria el valor del contador en cada 
+    ----momento
+
+    TIPOS
+    ---- Local: se define al contexto de un componente y su uso se limitado al uso de ese componente
+    ---- su uso es de caracter temporal 
+    ---- Global: se usa de manera extendida en toda la aplicacion incluso y aunque este limitado 
+    ---- a un contexto su uso necesario en el tiempo ej el estado de inicio de un usuario
+
+    ---- Cuado el estado global es muy extenso devemos usar la libreria store de ngrx para extraer cada 
+    ---- servicio global en un unico servicio global llamado store asi este actua como estado de verdad
+
+    ---- EL FLUJO DE NE STORE ES EL SIGUIENTE
+
+    ---- APLICACION --->Despacaha una---->ACCION---->que es procesada por un manejador de 
+        eventos llamado---->REDUCTOR---->este reductor creo o modifica un---->ESTADO
+        en la lectura la store expone el estado en forma de----->OBSERVABLE---
+        cunando nos suscribamos a un observable resibiremos el estado actual
+        el Observable es mapeado por-----> SELECTOR
+
+    ---- ACCIONES: Antes de definir las acciones identificamos el estado global 
+    ---- En la carpeta state creamos las acciones dentro del archivo de actions
+    ---- Luego de llamar cada accion en el componente de nuestra aplicacion mediante dispatch
+
+    ---- Extraemos nuestro estado global y el estado del codigo que lo modifican desde el componente de nuestra
+    ---- app hasta la store de ngrx no sin antes hablar del redutor:
+
+    ---- El reductor estara a la espera de que se despache desde la aplicacion un tipo
+    ---- espesifico de accion y cuando eso suceda ejecutara una funcion para generar el cambio en el estado global
+
+    ---- Eta funcion del reductor recibira dos argumentos el objeto del estado actual y el objeto
+    ---- de la accion despachada y usando estos dos objetos creara y devolvera un nuevo objeto para el estado 
+    ---- global que incluya los cambios asociados a la accion este nuevo objeto reemplazaara al objeto
+    ---- del estado anterior pasando a ser el estado gobal de la aplicacion estas funciones 
+    ---- son purar y sincronas estas funciones reductoras no podra usar ninuna variable externa
+
+    ---- Ahora crearemos en nuestra carpeta state el archivo reducer y añadimos una interfaz todosState
