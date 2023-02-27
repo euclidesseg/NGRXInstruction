@@ -2,11 +2,12 @@ import { createReducer, on } from "@ngrx/store";
 import { TodosPageActions } from ".";
 import { initialTodos, Todo } from "../model";
 
+export const todosStateFeatureKey: string  = 'featureKey'
 export interface TodosState {
     // a continuacion solamente tomamos el objeto del componente  de nuestra aplicacion
     // el cual figura como estado gloal de la aplicacion
     todos: Todo[];
-}
+ }
 //añadimis una constante para definir cual sera el estado inicial de este estado
 const initialState: TodosState = {
     todos: [],
@@ -23,6 +24,34 @@ export const todosReducer = createReducer(
     // un mismo efecto en el estado y simplemente tenemos que pasar estas funciones como argumentos iniciales
     // y pasar la funcion reductora a continuacion como ultimo argumento
     //  
-    on(TodosPageActions.init, () => ({todos:initialTodos }))
-    // Esta función se ejecuta cuando se inicializa la página de "todos", estableciendo el estado inicial de la lista de tareas en "initialTodos".
-)
+    on(TodosPageActions.init, (currenstate) => ({ 
+        ...currenstate,
+        todos: initialTodos,
+    })),
+    //ahora crearemos una nueva funcion on para la siguiente accion
+
+    on(TodosPageActions.addTodo, (currentState, action) => ({
+        ...currentState,
+        todos: [...currentState.todos, action.todo],
+      })),
+      on(TodosPageActions.removeTodo, (currentState, action) => ({
+        ...currentState,
+        todos: currentState.todos.filter((todo) => todo.id !== action.todo.id),
+      })),
+      on(TodosPageActions.markAsCompleted, (currentState, action) => ({
+        ...currentState,
+        todos: currentState.todos.map((todo) =>
+          todo.id === action.todo.id ? { ...todo, completed: true } : todo
+        ),
+      })),
+      on(TodosPageActions.markAsPending, (currentState, action) => ({
+        ...currentState,
+        todos: currentState.todos.map((todo) =>
+          todo.id === action.todo.id ? { ...todo, completed: false } : todo
+        ),
+      })),
+      on(TodosPageActions.clearCompleted, (currentState) => ({
+        ...currentState,
+        todos: currentState.todos.filter((todo) => todo.completed === false),
+      }))
+    );

@@ -38,3 +38,18 @@
     ---- son purar y sincronas estas funciones reductoras no podra usar ninuna variable externa
 
     ---- Ahora crearemos en nuestra carpeta state el archivo reducer y añadimos una interfaz todosState
+
+    ---- Luego de crear el reducer devemos rexportarlo desde el index.ts 
+    ---- lugo de eso vamosa nuestro app module para agreagrlo en el storeModule 
+
+    ---- Luego de crear la propiedad para nuestro estado global tambien agregamos ese estado en un segundo metodo dentro de
+    ---- del modulo de nuestro componente
+
+    ---- Creacion de nuestro selector: en la carpeta store creamos un archivo llamado todos.selectors
+
+    ---- Exportamos todos los selectores vajo un alias
+    
+    ---- Refactorizamos el componente
+
+    ---- Ahora actualizamos el template del componente
+
